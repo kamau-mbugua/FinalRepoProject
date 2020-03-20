@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".DriverSettingsActivity">
+
+    <ImageView
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:id="@+id/RiderprofileImage"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginBottom="20sp"/>
+
+    <EditText
+        android:id="@+id/Ridername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:hint="Your Name"
+        android:layout_marginBottom="20sp"/>
+
+    <EditText
+        android:id="@+id/Riderphone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textSize="20sp"
+        android:hint="+254: Your telephone number"
+        android:layout_marginBottom="20sp"
+        android:inputType="number"/>
+    <EditText
+        android:id="@+id/car"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Your Ride"
+        android:layout_marginBottom="20sp"
+        />
+    <!--<RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:orientation="horizontal">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UberX"
+            android:id="@+id/UberX"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UberBlack"
+            android:id="@+id/UberBlack"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UberXl"
+            android:id="@+id/UberXl"/>
+    </RadioGroup>-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Riderconfirm"
+        android:text="Confirm"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Riderback"
+        android:text="Back"/>
+
+
+</LinearLayout>
