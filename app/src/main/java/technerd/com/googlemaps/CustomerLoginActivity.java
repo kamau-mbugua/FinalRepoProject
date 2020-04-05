@@ -122,7 +122,11 @@ public class CustomerLoginActivity extends AppCompatActivity {
         btnCustomerLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEmailCustomer.getText().toString().isEmpty()){
+
+                if (mEmailCustomer.getText().toString().isEmpty() && mPasswordCustomer.getText().toString().isEmpty()){
+                    Toast.makeText(CustomerLoginActivity.this, "Email and Password Required", Toast.LENGTH_SHORT).show();
+                }
+                else if (mEmailCustomer.getText().toString().isEmpty()){
                     Toast.makeText(CustomerLoginActivity.this, "Enter Your Registered Email", Toast.LENGTH_SHORT).show();
 
                 }

@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbars="vertical"
 
     android:orientation="vertical"
     tools:context=".Register">
 
-    <TextView
+    <!--TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Kindly Register Here!"
         android:textStyle="bold"
-        android:textSize="28sp"/>
+        android:textSize="28sp"/-->
 
    <LinearLayout
        android:layout_width="match_parent"
@@ -93,6 +95,29 @@
         android:inputType="textPassword"
         android:textAlignment="center"
         android:textAllCaps="true" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+           <androidx.appcompat.widget.AppCompatCheckBox
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/checkboxTermsandConditions"
+               android:checked="true"
+               android:onClick="onCheckBoxClick"
+               android:text="I acknowledge that I have read and understood Terms and Conditions Provided by Ibodaa icn"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:id="@+id/termsNcodition"
+               android:layout_height="40dp"
+               android:text="Read Terms and Conditions"
+               android:layout_marginStart="30dp"
+               android:layout_marginEnd="30dp"
+               android:textColor="#03a9f4"
+               android:textSize="18sp"/>
+
+       </LinearLayout>
 
     <!--EditText
         android:id="@+id/etConfirmPasswordRegister"

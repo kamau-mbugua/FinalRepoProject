@@ -1,13 +1,16 @@
 package technerd.com.googlemaps;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +32,9 @@ public class SignUpCustomer extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener firebaseAuthlistener;
+
+    CheckBox terms;
+    TextView termsNconditions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,32 @@ public class SignUpCustomer extends AppCompatActivity {
 //        rPhone = findViewById(R.id.etPhoneRegister);
         btnRegister = findViewById(R.id.btnCRegister);
         tvLogin = findViewById(R.id.tvCAlreadyRegisterd);
+
+        terms = findViewById(R.id.checkboxTermsandConditions);
+        termsNconditions = findViewById(R.id.termsNcodition);
+
+        termsNconditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(SignUpCustomer.this)
+                        .setTitle("Terms and Conditions")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                terms.setChecked(true);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(SignUpCustomer.this, "KINDLY ACCEPT TERMS AND CONDITIONS", Toast.LENGTH_SHORT).show();
+                                terms.setChecked(false);
+                            }
+                        }).setMessage("Available Soon")
+                        .show();
+
+            }
+        });
 
 
 
@@ -79,15 +111,22 @@ public class SignUpCustomer extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final  String email = rMail.getText().toString().trim();
-                final String password = rPassword.getText().toString().trim();
+
+
                 /*final String fName = etFname.getText().toString().trim();
                 final String lName = etlName.getText().toString().trim();
                 final String rcPassword = rCPassword.getText().toString().trim();*/
-                final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
-                if (rMail.getText().toString().isEmpty()) {
+
+                if (rMail.getText().toString().isEmpty() && rPassword.getText().toString().isEmpty()){
+
+                    Toast.makeText(SignUpCustomer.this, "Email and Password Required to Proceed with Registration of iBodaa", Toast.LENGTH_LONG).show();
+
+                }
+
+
+                else if (rMail.getText().toString().isEmpty()) {
                     Toast.makeText(SignUpCustomer.this, "Enter your email", Toast.LENGTH_SHORT).show();
 
                 }
@@ -107,6 +146,8 @@ public class SignUpCustomer extends AppCompatActivity {
                     Toast.makeText(SignUpCustomer.this, "Enter your Password", Toast.LENGTH_SHORT).show();
 
                 }
+
+
                /* else if (rPhone.getText().toString().isEmpty())  {
                     Toast.makeText(Register.this, "Enter your phone", Toast.LENGTH_SHORT).show();
 
@@ -117,12 +158,58 @@ public class SignUpCustomer extends AppCompatActivity {
                 }*/
 
                 /* rPassword.getText().toString().equals(rCPassword);*/
-                progressBar.setVisibility(View.VISIBLE);
+              //  progressBar.setVisibility(View.VISIBLE);
 
-                mAuth.createUserWithEmailAndPassword(email,password/*,fName,lName,rcPassword*/).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                else {
+                    final  String email = rMail.getText().toString().trim();
+                    final String password = rPassword.getText().toString().trim();
+                    final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                    mAuth.createUserWithEmailAndPassword(email,password/*,fName,lName,rcPassword*/).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()){
+                                if (email.matches(emailPattern)){
+                                    rMail.setError("Invalid Email!");
+                                }
+                                else if (password.length()>8){
+                                    rPassword.setError("The password is Short");
+
+                                }
+                                else{
+                                    Toast.makeText(SignUpCustomer.this, "Register Failed,Try Again!", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                            else {
+                                Intent registerActivity = new Intent(SignUpCustomer.this, MainActivity.class);
+                                startActivity(registerActivity);
+                                finish();
+                                return;
+
+                            }
+
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
+                }
+
+          /*      mAuth.createUserWithEmailAndPassword(email,password*//*,fName,lName,rcPassword*//*).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()){
+                        *//*if (rMail.getText().toString().isEmpty() && rPassword.getText().toString().isEmpty()){
+
+                            Toast.makeText(SignUpCustomer.this, "Email and Password Required to Proceed with Registration of iBodaa", Toast.LENGTH_LONG).show();
+
+                        }
+                        else if (rMail.getText().toString().isEmpty()) {
+                            Toast.makeText(SignUpCustomer.this, "Enter your email", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else if (rPassword.getText().toString().isEmpty())  {
+                            Toast.makeText(SignUpCustomer.this, "Enter your Password", Toast.LENGTH_SHORT).show();
+
+                        }
+                         else *//*if (!task.isSuccessful()){
                             if (password.length()<8){
                                 rPassword.setError("Password not Fit");
                             }
@@ -146,7 +233,7 @@ public class SignUpCustomer extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                     }
                 });
-
+*/
 
 
             }
@@ -162,5 +249,21 @@ public class SignUpCustomer extends AppCompatActivity {
 
             }
         });
+    }
+
+    public  void onCheckBoxClick(View view){
+        //Is the View now Checked
+        boolean checked = ((CheckBox)view).isChecked();
+        switch (view.getId()){
+            case R.id.checkboxTermsandConditions:
+            if (checked){
+                Toast.makeText(this, "ACCEPTED", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "YOU SHOULD ACCEPT TERMS AND CONDITIONS", Toast.LENGTH_SHORT).show();
+            }
+            break;
+        }
+
     }
 }

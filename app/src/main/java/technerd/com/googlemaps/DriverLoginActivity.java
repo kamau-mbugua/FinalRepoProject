@@ -93,7 +93,10 @@ public class DriverLoginActivity extends AppCompatActivity {
         btnRiderLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEmailRider.getText().toString().isEmpty()){
+                if (mEmailRider.getText().toString().isEmpty() && mPasswordRider.getText().toString().isEmpty()){
+                    Toast.makeText(DriverLoginActivity.this, "Email and Password Required", Toast.LENGTH_SHORT).show();
+                }
+                else if (mEmailRider.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), "Enter Your Registered Email", Toast.LENGTH_SHORT).show();
 
                 }
@@ -131,6 +134,7 @@ public class DriverLoginActivity extends AppCompatActivity {
                            return;
 
                        }
+                            mProgress.setVisibility(View.GONE);
                         }
                     });
 
@@ -146,6 +150,7 @@ public class DriverLoginActivity extends AppCompatActivity {
                 startActivity(customerLogin);
                 finish();
                 return;
+
 
             }
         });
